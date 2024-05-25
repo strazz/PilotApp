@@ -28,11 +28,8 @@ struct RegistrationView: View {
             .textFieldStyle(.roundedBorder)
             .autocorrectionDisabled()
             .autocapitalization(.none)
-        if !viewModel.isNameValid {
-            Text("Must contain at least one non-whitespace character.")
-                .foregroundStyle(.red)
-                .fontWeight(.light)
-                .font(.caption)
+        if let error = viewModel.nameError {
+            buildErrorView(error: error)
         }
     }
     
@@ -46,11 +43,8 @@ struct RegistrationView: View {
             }
                    .pickerStyle(.segmented)
         }
-        if !viewModel.isLicenceValid {
-            Text("A valid type of pilot license should be inserted.")
-                .foregroundStyle(.red)
-                .fontWeight(.light)
-                .font(.caption)
+        if let error = viewModel.licenceError {
+            buildErrorView(error: error)
         }
     }
     
@@ -59,21 +53,15 @@ struct RegistrationView: View {
             .textFieldStyle(.roundedBorder)
             .autocorrectionDisabled()
             .autocapitalization(.none)
-        if !viewModel.isPasswordValid {
-            Text("Must be at least 12 characters, a combination of uppercase, lowercase and numbers and it’s not allowed to have the username in there.")
-                .foregroundStyle(.red)
-                .fontWeight(.light)
-                .font(.caption)
+        if let error = viewModel.passwordError {
+            buildErrorView(error: error)
         }
         SecureField("Password verification", text: $viewModel.verificationPassword)
             .textFieldStyle(.roundedBorder)
             .autocorrectionDisabled()
             .autocapitalization(.none)
-        if !viewModel.isVerificationPasswordValid {
-            Text("Must be identical to the password.")
-                .foregroundStyle(.red)
-                .fontWeight(.light)
-                .font(.caption)
+        if let error = viewModel.verificationPasswordError {
+            buildErrorView(error: error)
         }
     }
     
@@ -82,6 +70,13 @@ struct RegistrationView: View {
         }
         .buttonStyle(.bordered)
         .disabled(!viewModel.isRegisterButtonEnabled)
+    }
+    
+    @ViewBuilder func buildErrorView(error: Error) -> some View {
+        Text(error.localizedDescription)
+            .foregroundStyle(.red)
+            .fontWeight(.light)
+            .font(.caption)
     }
 }
 

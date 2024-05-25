@@ -26,71 +26,71 @@ final class RegistrationTests: XCTestCase {
     //MARK: Name - Must contain at least one non-whitespace character.
     func testValidName() throws {
         sut.name = "Giovanni"
-        XCTAssertTrue(sut.isNameValid)
+        XCTAssertNil(sut.nameError)
     }
     
     func testEmptyName() throws {
         sut.name = ""
-        XCTAssertFalse(sut.isNameValid)
+        XCTAssertEqual(ValidationError.invalidName, sut.nameError as! ValidationError)
     }
     
     func testWhitespacesName() throws {
         sut.name = "   "
-        XCTAssertFalse(sut.isNameValid)
+        XCTAssertEqual(ValidationError.invalidName, sut.nameError as! ValidationError)
     }
     
     ///*
     //MARK: Pilot license type – A valid type of pilot license should be inserted.
     func testValidLicenceType() throws {
         sut.selectedLicence = "PPL"
-        XCTAssertTrue(sut.isLicenceValid)
+        XCTAssertNil(sut.licenceError)
     }
     
     func testInvalidLicenceType() throws {
         sut.selectedLicence = "XXX"
-        XCTAssertFalse(sut.isLicenceValid)
+        XCTAssertEqual(ValidationError.invalidLicence, sut.licenceError as! ValidationError)
     }
     ///*
     //MARK: Password – Must be at least 12 characters, a combination of uppercase, lowercase and numbers and it’s not allowed to have the username in there.
     func testValidPassword() throws {
         sut.password = "A9sDk3fJ1lM2"
-        XCTAssertTrue(sut.isPasswordValid)
+        XCTAssertNil(sut.passwordError)
     }
     
     func testEmptyPassword() throws {
         sut.password = ""
-        XCTAssertFalse(sut.isPasswordValid)
+        XCTAssertEqual(ValidationError.emptyPassword, sut.passwordError as! ValidationError)
     }
     
     func testFewCharactersPassword() throws {
         sut.password = "A9sDk3fJ1lM"
-        XCTAssertFalse(sut.isPasswordValid)
+        XCTAssertEqual(ValidationError.shortPassword, sut.passwordError as! ValidationError)
     }
     
     func testUppercasedPassword() throws {
         sut.password = "A9SDK3FJ1LM2"
-        XCTAssertFalse(sut.isPasswordValid)
+        XCTAssertEqual(ValidationError.passwordFormat, sut.passwordError as! ValidationError)
     }
     
     func testLowercasedPassword() throws {
         sut.password = "a9sdk3fj1lm2"
-        XCTAssertFalse(sut.isPasswordValid)
+        XCTAssertEqual(ValidationError.passwordFormat, sut.passwordError as! ValidationError)
     }
     
     func testNoNumbersPassword() throws {
         sut.password = "asdkfjlMXxxx"
-        XCTAssertFalse(sut.isPasswordValid)
+        XCTAssertEqual(ValidationError.passwordFormat, sut.passwordError as! ValidationError)
     }
     
     func testNoLettersPassword() throws {
         sut.password = "123456789012"
-        XCTAssertFalse(sut.isPasswordValid)
+        XCTAssertEqual(ValidationError.passwordFormat, sut.passwordError as! ValidationError)
     }
     
     func testNoUsernamePassword() throws {
         sut.name = "Giovanni"
         sut.password = "A9sDk3fJ1lM2Giovanni"
-        XCTAssertFalse(sut.isPasswordValid)
+        XCTAssertEqual(ValidationError.passwordContainsUsername, sut.passwordError as! ValidationError)
     }
 
     ///*
@@ -98,13 +98,13 @@ final class RegistrationTests: XCTestCase {
     func testPasswordVerificationValidation() throws {
         sut.password = "A9sDk3fJ1lM2"
         sut.verificationPassword = "A9sDk3fJ1lM2"
-        XCTAssertTrue(sut.isVerificationPasswordValid)
+        XCTAssertNil(sut.verificationPasswordError)
     }
     
     func testPasswordVerificationValidationError() throws {
         sut.password = "A9sDk3fJ1lM2"
         sut.verificationPassword = "A9sDk3fJ1lM"
-        XCTAssertFalse(sut.isVerificationPasswordValid)
+        XCTAssertEqual(ValidationError.verificationPassword, sut.verificationPasswordError as! ValidationError)
     }
     
     ///*

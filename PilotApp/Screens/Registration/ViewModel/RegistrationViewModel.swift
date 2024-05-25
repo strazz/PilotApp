@@ -6,23 +6,30 @@
 //
 
 import Foundation
+import Combine
 
 class RegistrationViewModel: ObservableObject {
     private let businessLogic: RegistrationBusinessLogic
     @Published var name = ""
-    @Published var isNameValid = false
+    @Published var nameError: Error?
     @Published var password = ""
-    @Published var isPasswordValid = false
+    @Published var passwordError: Error?
     @Published var verificationPassword = ""
-    @Published var isVerificationPasswordValid = false
+    @Published var verificationPasswordError: Error?
     @Published var selectedLicence = ""
     @Published var licenceTypes: [String]
-    @Published var isLicenceValid = false
+    @Published var licenceError: Error?
+    
+    private var cancellables = Set<AnyCancellable>()
     
     init(businessLogic: RegistrationBusinessLogic) {
         self.businessLogic = businessLogic
         licenceTypes = businessLogic.validLicences
         validateFields()
+    }
+    
+    deinit {
+        cancellables.forEach({ $0.cancel() })
     }
     
     private func validateFields() {
@@ -34,38 +41,78 @@ class RegistrationViewModel: ObservableObject {
     
     private func validateName() {
         $name.map { [unowned self] aName in
-            self.businessLogic.isNameValid(name: aName)
+            self.businessLogic.validateName(name: aName)
         }
-        .assign(to: &$isNameValid)
+        .sink(receiveValue: { result in
+            switch result {
+            case .failure(let error):
+                self.nameError = error
+            case .success:
+                self.nameError = nil
+            }
+        })
+        .store(in: &cancellables)
     }
     
     
     private func validatePassword() {
         $password.map { [unowned self] aPassword in
-            self.businessLogic.isPasswordValid(username: self.name, password: aPassword)
+            if aPassword == self.verificationPassword {
+                self.verificationPasswordError = nil
+            } else {
+                self.verificationPasswordError = ValidationError.verificationPassword
+            }
+            return self.businessLogic.validatePassword(username: self.name, password: aPassword)
         }
-        .assign(to: &$isPasswordValid)
+        .sink(receiveValue: { result in
+            switch result {
+            case .failure(let error):
+                self.passwordError = error
+            case .success:
+                self.passwordError = nil
+            }
+        })
+        .store(in: &cancellables)
     }
     
     private func validateLicence() {
         $selectedLicence.map { [unowned self] aLicence in
-            self.businessLogic.isLicenceValid(licence: aLicence)
+            self.businessLogic.validateLicence(licence: aLicence)
         }
-        .assign(to: &$isLicenceValid)
+        .sink(receiveValue: { result in
+            switch result {
+            case .failure(let error):
+                self.licenceError = error
+            case .success:
+                self.licenceError = nil
+            }
+        })
+        .store(in: &cancellables)
     }
     
     private func validateConfirmPassword() {
-        $verificationPassword.map { [unowned self] aPassword in
-            aPassword == self.password
+        $verificationPassword.map { [unowned self] aPassword -> Result<Void, Error> in
+            if aPassword == self.password {
+                return Result.success(())
+            }
+            return Result.failure(ValidationError.verificationPassword)
         }
-        .assign(to: &$isVerificationPasswordValid)
+        .sink { result in
+            switch result {
+            case .failure(let error):
+                self.verificationPasswordError = error
+            case .success:
+                self.verificationPasswordError = nil
+            }
+        }
+        .store(in: &cancellables)
     }
     
     var isRegisterButtonEnabled: Bool {
-        isNameValid &&
-        isPasswordValid &&
-        isVerificationPasswordValid &&
-        isLicenceValid
+        nameError == nil &&
+        passwordError == nil &&
+        verificationPasswordError == nil &&
+        licenceError == nil
     }
     
     func onRegister() {
