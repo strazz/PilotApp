@@ -8,24 +8,38 @@
 import Foundation
 import Combine
 
-class RegistrationViewModel: ObservableObject {
-    private let businessLogic: RegistrationBusinessLogic
+@MainActor class RegistrationViewModel: ObservableObject {
+    private let businessLogic: RegistrationBusinessLogicProtocol
     @Published var name = ""
     @Published var nameError: Error?
     @Published var password = ""
     @Published var passwordError: Error?
     @Published var verificationPassword = ""
     @Published var verificationPasswordError: Error?
-    @Published var selectedLicence = ""
-    @Published var licenceTypes: [String]
-    @Published var licenceError: Error?
+    @Published var selectedLicense = ""
+    @Published var licenseTypes: [String] = []
+    @Published var licenseError: Error?
+    @Published var loadingError: Error?
+    @Published var isLoading = false
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(businessLogic: RegistrationBusinessLogic) {
+    init(businessLogic: RegistrationBusinessLogicProtocol) {
         self.businessLogic = businessLogic
-        licenceTypes = businessLogic.validLicences
         validateFields()
+    }
+    
+    func loadData() async {
+        isLoading = true
+        defer {
+            isLoading = false
+        }
+        do {
+            try await businessLogic.loadLicenses()
+            licenseTypes = businessLogic.licenses.compactMap({$0.rawValue.uppercased()})
+        } catch {
+            loadingError =  RegistrationError.genericError
+        }
     }
     
     deinit {
@@ -35,7 +49,7 @@ class RegistrationViewModel: ObservableObject {
     private func validateFields() {
         validateName()
         validatePassword()
-        validateLicence()
+        validateLicense()
         validateConfirmPassword()
     }
     
@@ -75,16 +89,16 @@ class RegistrationViewModel: ObservableObject {
         .store(in: &cancellables)
     }
     
-    private func validateLicence() {
-        $selectedLicence.map { [unowned self] aLicence in
-            self.businessLogic.validateLicence(licence: aLicence)
+    private func validateLicense() {
+        $selectedLicense.map { [unowned self] aLicense in
+            self.businessLogic.validateLicense(license: aLicense)
         }
         .sink(receiveValue: { result in
             switch result {
             case .failure(let error):
-                self.licenceError = error
+                self.licenseError = error
             case .success:
-                self.licenceError = nil
+                self.licenseError = nil
             }
         })
         .store(in: &cancellables)
@@ -112,7 +126,7 @@ class RegistrationViewModel: ObservableObject {
         nameError == nil &&
         passwordError == nil &&
         verificationPasswordError == nil &&
-        licenceError == nil
+        licenseError == nil
     }
     
     func onRegister() {

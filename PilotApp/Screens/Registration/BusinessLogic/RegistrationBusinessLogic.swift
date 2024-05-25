@@ -7,39 +7,29 @@
 
 import Foundation
 
-enum ValidationError: LocalizedError {
-    case invalidName
-    case invalidLicence
-    case emptyPassword
-    case passwordContainsUsername
-    case shortPassword
-    case passwordFormat
-    case verificationPassword
-    
-    var errorDescription: String? {
-        switch self {
-        case .invalidName:
-            "Must contain at least one non-whitespace character."
-        case .invalidLicence:
-            "A valid type of pilot license should be inserted."
-        case .emptyPassword:
-            "Password cannot be empty."
-        case .passwordContainsUsername:
-            "Password should not contains username."
-        case .shortPassword:
-            "Password must be at least 12 characters."
-        case .passwordFormat:
-            "Password must be a combination of uppercase, lowercase and numbers."
-        case .verificationPassword:
-            "Must be identical to the password."
-        }
-    }
+protocol RegistrationBusinessLogicProtocol {
+    var licenses: [LicenseType] { get }
+    func loadLicenses() async throws
+    func validateName(name: String) -> Result<Void, Error>
+    func validateLicense(license: String) -> Result<Void, Error>
+    func validatePassword(username: String, password: String) -> Result<Void, Error>
 }
 
-class RegistrationBusinessLogic {
+class RegistrationBusinessLogic: RegistrationBusinessLogicProtocol {
     
-    let validLicences = ["PPL", "ATPL", "MPL"]
+    private let repository: LicensesRepository
     private let requiredPasswordLength = 12
+    var licenses: [LicenseType] = []
+    
+    init(repository: LicensesRepository) {
+        self.repository = repository
+    }
+    
+    func loadLicenses() async throws {
+        licenses = try await repository.getLicenses().compactMap({ license in
+            license.type
+        })
+    }
     
     func validateName(name: String) -> Result<Void, Error> {
         let result = name.wholeMatch(of: /^.*\S.*$/)
@@ -49,11 +39,11 @@ class RegistrationBusinessLogic {
         return .failure(ValidationError.invalidName)
     }
     
-    func validateLicence(licence: String) -> Result<Void, Error> {
-        if validLicences.contains(licence) {
+    func validateLicense(license: String) -> Result<Void, Error> {
+        if licenses.compactMap({ $0.rawValue }).contains(license) {
             return .success(())
         }
-        return .failure(ValidationError.invalidLicence)
+        return .failure(ValidationError.invalidLicense)
     }
     
     func validatePassword(username: String, password: String) -> Result<Void, Error> {

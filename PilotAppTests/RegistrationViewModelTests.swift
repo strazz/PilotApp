@@ -8,13 +8,15 @@
 import XCTest
 @testable import PilotApp
 
-final class RegistrationTests: XCTestCase {
+final class RegistrationViewModelTests: XCTestCase {
     
     private var sut: RegistrationViewModel!
 
-    override func setUpWithError() throws {
+    @MainActor override func setUpWithError() throws {
         sut = RegistrationViewModel(
-            businessLogic: RegistrationBusinessLogic()
+            businessLogic: RegistrationBusinessLogic(
+                repository: MockLicensesRepository()
+            )
         )
     }
 
@@ -24,70 +26,71 @@ final class RegistrationTests: XCTestCase {
 
     ///*
     //MARK: Name - Must contain at least one non-whitespace character.
-    func testValidName() throws {
+    @MainActor func testValidName() throws {
         sut.name = "Giovanni"
         XCTAssertNil(sut.nameError)
     }
     
-    func testEmptyName() throws {
+    @MainActor func testEmptyName() throws {
         sut.name = ""
         XCTAssertEqual(ValidationError.invalidName, sut.nameError as! ValidationError)
     }
     
-    func testWhitespacesName() throws {
+    @MainActor func testWhitespacesName() throws {
         sut.name = "   "
         XCTAssertEqual(ValidationError.invalidName, sut.nameError as! ValidationError)
     }
     
     ///*
     //MARK: Pilot license type – A valid type of pilot license should be inserted.
-    func testValidLicenceType() throws {
-        sut.selectedLicence = "PPL"
-        XCTAssertNil(sut.licenceError)
+    @MainActor func testValidLicenseType() async throws {
+        await sut.loadData()
+        sut.selectedLicense = "PPL"
+        XCTAssertNil(sut.licenseError)
     }
     
-    func testInvalidLicenceType() throws {
-        sut.selectedLicence = "XXX"
-        XCTAssertEqual(ValidationError.invalidLicence, sut.licenceError as! ValidationError)
+    @MainActor func testInvalidLicenseType() throws {
+        sut.selectedLicense = "XXX"
+        XCTAssertEqual(ValidationError.invalidLicense, sut.licenseError as! ValidationError)
     }
     ///*
     //MARK: Password – Must be at least 12 characters, a combination of uppercase, lowercase and numbers and it’s not allowed to have the username in there.
-    func testValidPassword() throws {
+    @MainActor func testValidPassword() throws {
         sut.password = "A9sDk3fJ1lM2"
         XCTAssertNil(sut.passwordError)
     }
     
-    func testEmptyPassword() throws {
+    @MainActor func testEmptyPassword() throws {
         sut.password = ""
         XCTAssertEqual(ValidationError.emptyPassword, sut.passwordError as! ValidationError)
     }
     
-    func testFewCharactersPassword() throws {
+    @MainActor func testFewCharactersPassword() throws {
         sut.password = "A9sDk3fJ1lM"
         XCTAssertEqual(ValidationError.shortPassword, sut.passwordError as! ValidationError)
     }
     
-    func testUppercasedPassword() throws {
+    @MainActor func testUppercasedPassword() throws {
         sut.password = "A9SDK3FJ1LM2"
         XCTAssertEqual(ValidationError.passwordFormat, sut.passwordError as! ValidationError)
     }
     
-    func testLowercasedPassword() throws {
+    @MainActor func testLowercasedPassword() throws {
         sut.password = "a9sdk3fj1lm2"
         XCTAssertEqual(ValidationError.passwordFormat, sut.passwordError as! ValidationError)
     }
     
-    func testNoNumbersPassword() throws {
+    @MainActor func testNoNumbersPassword() throws {
         sut.password = "asdkfjlMXxxx"
         XCTAssertEqual(ValidationError.passwordFormat, sut.passwordError as! ValidationError)
     }
     
-    func testNoLettersPassword() throws {
+    @MainActor func testNoLettersPassword() throws {
         sut.password = "123456789012"
         XCTAssertEqual(ValidationError.passwordFormat, sut.passwordError as! ValidationError)
     }
     
-    func testNoUsernamePassword() throws {
+    @MainActor func testNoUsernamePassword() throws {
         sut.name = "Giovanni"
         sut.password = "A9sDk3fJ1lM2Giovanni"
         XCTAssertEqual(ValidationError.passwordContainsUsername, sut.passwordError as! ValidationError)
@@ -95,13 +98,13 @@ final class RegistrationTests: XCTestCase {
 
     ///*
     //MARK: Password verification – Must be identical to the password.
-    func testPasswordVerificationValidation() throws {
+    @MainActor func testPasswordVerificationValidation() throws {
         sut.password = "A9sDk3fJ1lM2"
         sut.verificationPassword = "A9sDk3fJ1lM2"
         XCTAssertNil(sut.verificationPasswordError)
     }
     
-    func testPasswordVerificationValidationError() throws {
+    @MainActor func testPasswordVerificationValidationError() throws {
         sut.password = "A9sDk3fJ1lM2"
         sut.verificationPassword = "A9sDk3fJ1lM"
         XCTAssertEqual(ValidationError.verificationPassword, sut.verificationPasswordError as! ValidationError)
@@ -109,19 +112,41 @@ final class RegistrationTests: XCTestCase {
     
     ///*
     //MARK: Register button must be enabled only if all validations succeeds
-    func testRegisterButtonEnabled() {
+    @MainActor func testRegisterButtonEnabled() async {
+        await sut.loadData()
         sut.name = "Giovanni"
         sut.password = "A9sDk3fJ1lM2"
         sut.verificationPassword = "A9sDk3fJ1lM2"
-        sut.selectedLicence = "PPL"
+        sut.selectedLicense = "PPL"
         XCTAssertTrue(sut.isRegisterButtonEnabled)
     }
     
-    func testRegisterButtonDisabled() {
+    @MainActor func testRegisterButtonDisabled() {
         sut.name = "Giovanni"
         sut.password = "A9sDk3fJ1lM2"
         sut.verificationPassword = "A9sDk3fJ1lM"
-        sut.selectedLicence = "PPL"
+        sut.selectedLicense = "PPL"
         XCTAssertFalse(sut.isRegisterButtonEnabled)
+    }
+    
+    ///*
+    //MARK: test the loading state of the viewModel
+    @MainActor func testViewModelIsLoading() async {
+        XCTAssertFalse(sut.isLoading)
+        let expectation = XCTestExpectation(description: "loading")
+        Task {
+            await sut.loadData()
+            expectation.fulfill()
+        }
+        await Task.yield()
+        XCTAssertTrue(sut.isLoading)
+        await fulfillment(of: [expectation], timeout: 1)
+        XCTAssertFalse(sut.isLoading)
+    }
+    
+    //MARK: test licenses loading:
+    @MainActor func testLicensesLoaded() async throws {
+        await sut.loadData()
+        XCTAssertEqual(3, sut.licenseTypes.count)
     }
 }

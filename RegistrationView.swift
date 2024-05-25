@@ -12,15 +12,26 @@ struct RegistrationView: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            buildNameField()
-            buildLicenceField()
-            buildPasswordField()
-            Spacer()
-            buildRegisterButton()
-                
+            if viewModel.isLoading {
+                ProgressView("Loading...")
+            } else {
+                buildNameField()
+                buildLicenseField()
+                buildPasswordField()
+                Spacer()
+                buildRegisterButton()
+                if let error = viewModel.loadingError {
+                    buildErrorView(error: error)
+                }
+            }       
         }
         .padding()
         .navigationTitle("Register")
+        .onAppear() {
+            Task { @MainActor in
+                await viewModel.loadData()
+            }
+        }
     }
     
     @ViewBuilder func buildNameField() -> some View {
@@ -33,17 +44,17 @@ struct RegistrationView: View {
         }
     }
     
-    @ViewBuilder func buildLicenceField() -> some View {
+    @ViewBuilder func buildLicenseField() -> some View {
         HStack {
-            Text("Pilot licence type:")
-            Picker("Pilot licence type", selection: $viewModel.selectedLicence) {
-                ForEach(viewModel.licenceTypes, id: \.self) { licence in
-                    Text(licence)
+            Text("Pilot license type:")
+            Picker("Pilot license type", selection: $viewModel.selectedLicense) {
+                ForEach(viewModel.licenseTypes, id: \.self) { license in
+                    Text(license)
                 }
             }
                    .pickerStyle(.segmented)
         }
-        if let error = viewModel.licenceError {
+        if let error = viewModel.licenseError {
             buildErrorView(error: error)
         }
     }
@@ -83,7 +94,7 @@ struct RegistrationView: View {
 #Preview {
     RegistrationView(
         viewModel: RegistrationViewModel(
-            businessLogic: RegistrationBusinessLogic()
+            businessLogic: RegistrationBusinessLogic(repository: LocalLicensesRepository())
         )
     )
 }
