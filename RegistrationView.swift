@@ -20,7 +20,7 @@ struct RegistrationView: View {
                 buildPasswordField()
                 Spacer()
                 buildRegisterButton()
-                if let error = viewModel.loadingError {
+                if let error = viewModel.applicationError {
                     buildErrorView(error: error)
                 }
             }       
@@ -48,8 +48,8 @@ struct RegistrationView: View {
         HStack {
             Text("Pilot license type:")
             Picker("Pilot license type", selection: $viewModel.selectedLicense) {
-                ForEach(viewModel.licenseTypes, id: \.self) { license in
-                    Text(license)
+                ForEach(viewModel.licenses, id: \.self) { license in
+                    Text(license.type.rawValue.uppercased()).tag(Optional(license))
                 }
             }
                    .pickerStyle(.segmented)
@@ -78,6 +78,7 @@ struct RegistrationView: View {
     
     @ViewBuilder func buildRegisterButton() -> some View {
         Button("Register") {
+            viewModel.onRegister()
         }
         .buttonStyle(.bordered)
         .disabled(!viewModel.isRegisterButtonEnabled)
@@ -94,7 +95,7 @@ struct RegistrationView: View {
 #Preview {
     RegistrationView(
         viewModel: RegistrationViewModel(
-            businessLogic: RegistrationBusinessLogic(repository: LocalLicensesRepository())
+            businessLogic: RegistrationBusinessLogic(repository: LocalLicensesRepository(), persistance: UserDefaultsPersistance(name: nil))
         )
     )
 }

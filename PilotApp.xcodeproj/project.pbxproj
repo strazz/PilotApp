@@ -24,6 +24,9 @@
 		1FD2CE852C0236A200ECBAA5 /* LocalRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CE842C0236A200ECBAA5 /* LocalRepositoryTests.swift */; };
 		1FD2CE872C02398C00ECBAA5 /* RegistrationBusinessLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CE862C02398C00ECBAA5 /* RegistrationBusinessLogicTests.swift */; };
 		1FD2CE892C02399B00ECBAA5 /* TestMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CE882C02399B00ECBAA5 /* TestMocks.swift */; };
+		1FD2CE8C2C023EDC00ECBAA5 /* Persistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CE8B2C023EDC00ECBAA5 /* Persistable.swift */; };
+		1FD2CE8E2C023EFB00ECBAA5 /* UserDefaultsPersistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CE8D2C023EFB00ECBAA5 /* UserDefaultsPersistance.swift */; };
+		1FD2CE902C023F5E00ECBAA5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CE8F2C023F5E00ECBAA5 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +67,9 @@
 		1FD2CE842C0236A200ECBAA5 /* LocalRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalRepositoryTests.swift; sourceTree = "<group>"; };
 		1FD2CE862C02398C00ECBAA5 /* RegistrationBusinessLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationBusinessLogicTests.swift; sourceTree = "<group>"; };
 		1FD2CE882C02399B00ECBAA5 /* TestMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestMocks.swift; sourceTree = "<group>"; };
+		1FD2CE8B2C023EDC00ECBAA5 /* Persistable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistable.swift; sourceTree = "<group>"; };
+		1FD2CE8D2C023EFB00ECBAA5 /* UserDefaultsPersistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsPersistance.swift; sourceTree = "<group>"; };
+		1FD2CE8F2C023F5E00ECBAA5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +120,7 @@
 		1FD2CE402C01E06700ECBAA5 /* PilotApp */ = {
 			isa = PBXGroup;
 			children = (
+				1FD2CE8A2C023EBE00ECBAA5 /* Persistence */,
 				1FD2CE812C0232DE00ECBAA5 /* Errors */,
 				1FD2CE7E2C0230B900ECBAA5 /* Repositories */,
 				1FD2CE6F2C01E10E00ECBAA5 /* Screens */,
@@ -185,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				1FD2CE7C2C022F8900ECBAA5 /* PilotLicense.swift */,
+				1FD2CE8F2C023F5E00ECBAA5 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -227,6 +235,15 @@
 				1FD2CE822C0232ED00ECBAA5 /* Errors.swift */,
 			);
 			path = Errors;
+			sourceTree = "<group>";
+		};
+		1FD2CE8A2C023EBE00ECBAA5 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				1FD2CE8B2C023EDC00ECBAA5 /* Persistable.swift */,
+				1FD2CE8D2C023EFB00ECBAA5 /* UserDefaultsPersistance.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -360,7 +377,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FD2CE8C2C023EDC00ECBAA5 /* Persistable.swift in Sources */,
 				1FD2CE712C01E12F00ECBAA5 /* RegistrationView.swift in Sources */,
+				1FD2CE8E2C023EFB00ECBAA5 /* UserDefaultsPersistance.swift in Sources */,
 				1FD2CE742C01E18B00ECBAA5 /* RegistrationViewModel.swift in Sources */,
 				1FD2CE802C0230C800ECBAA5 /* LicensesRepository.swift in Sources */,
 				1FD2CE762C01EE9100ECBAA5 /* RegistrationBusinessLogic.swift in Sources */,
@@ -368,6 +387,7 @@
 				1FD2CE442C01E06700ECBAA5 /* ContentView.swift in Sources */,
 				1FD2CE7D2C022F8900ECBAA5 /* PilotLicense.swift in Sources */,
 				1FD2CE422C01E06700ECBAA5 /* PilotAppApp.swift in Sources */,
+				1FD2CE902C023F5E00ECBAA5 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

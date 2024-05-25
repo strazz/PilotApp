@@ -11,16 +11,19 @@ import XCTest
 final class RegistrationViewModelTests: XCTestCase {
     
     private var sut: RegistrationViewModel!
+    private var businessLogic: TestRegistrationBusinessLogic!
 
     @MainActor override func setUpWithError() throws {
+        businessLogic = TestRegistrationBusinessLogic(
+            repository: MockLicensesRepository(),
+            persistance: MockPersistable())
         sut = RegistrationViewModel(
-            businessLogic: RegistrationBusinessLogic(
-                repository: MockLicensesRepository()
-            )
+            businessLogic: businessLogic
         )
     }
 
     override func tearDownWithError() throws {
+        businessLogic = nil
         sut = nil
     }
 
@@ -45,12 +48,12 @@ final class RegistrationViewModelTests: XCTestCase {
     //MARK: Pilot license type – A valid type of pilot license should be inserted.
     @MainActor func testValidLicenseType() async throws {
         await sut.loadData()
-        sut.selectedLicense = "PPL"
+        sut.selectedLicense = PilotLicense(type: .ppl, aircrafts: [])
         XCTAssertNil(sut.licenseError)
     }
     
     @MainActor func testInvalidLicenseType() throws {
-        sut.selectedLicense = "XXX"
+        sut.selectedLicense = nil
         XCTAssertEqual(ValidationError.invalidLicense, sut.licenseError as! ValidationError)
     }
     ///*
@@ -117,7 +120,7 @@ final class RegistrationViewModelTests: XCTestCase {
         sut.name = "Giovanni"
         sut.password = "A9sDk3fJ1lM2"
         sut.verificationPassword = "A9sDk3fJ1lM2"
-        sut.selectedLicense = "PPL"
+        sut.selectedLicense = PilotLicense(type: .ppl, aircrafts: [])
         XCTAssertTrue(sut.isRegisterButtonEnabled)
     }
     
@@ -125,7 +128,7 @@ final class RegistrationViewModelTests: XCTestCase {
         sut.name = "Giovanni"
         sut.password = "A9sDk3fJ1lM2"
         sut.verificationPassword = "A9sDk3fJ1lM"
-        sut.selectedLicense = "PPL"
+        sut.selectedLicense = PilotLicense(type: .ppl, aircrafts: [])
         XCTAssertFalse(sut.isRegisterButtonEnabled)
     }
     
@@ -147,6 +150,14 @@ final class RegistrationViewModelTests: XCTestCase {
     //MARK: test licenses loading:
     @MainActor func testLicensesLoaded() async throws {
         await sut.loadData()
-        XCTAssertEqual(3, sut.licenseTypes.count)
+        XCTAssertEqual(3, sut.licenses.count)
+    }
+    
+    //MARK: test save license called
+    @MainActor func testOnRegister() async throws {
+        await sut.loadData()
+        sut.selectedLicense = businessLogic.licenses.first
+        sut.onRegister()
+        XCTAssertTrue(businessLogic.isSaveUserCalled)
     }
 }

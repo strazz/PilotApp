@@ -15,9 +15,17 @@ struct PilotLicenses: Codable {
     }
 }
 
-struct PilotLicense: Codable {
+struct PilotLicense: Codable, Hashable {
     var type: LicenseType
     var aircrafts: [String]
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(type)
+    }
+    
+    static func == (lhs: PilotLicense, rhs: PilotLicense) -> Bool {
+        lhs.type == rhs.type
+    }
 }
 
 enum LicenseType: String, Codable {

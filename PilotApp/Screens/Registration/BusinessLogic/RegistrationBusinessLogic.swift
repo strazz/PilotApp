@@ -8,27 +8,29 @@
 import Foundation
 
 protocol RegistrationBusinessLogicProtocol {
-    var licenses: [LicenseType] { get }
+    var licenses: [PilotLicense] { get }
     func loadLicenses() async throws
     func validateName(name: String) -> Result<Void, Error>
-    func validateLicense(license: String) -> Result<Void, Error>
+    func validateLicense(license: PilotLicense) -> Result<Void, Error>
     func validatePassword(username: String, password: String) -> Result<Void, Error>
+    func saveUser(username: String, license: PilotLicense) throws
 }
 
 class RegistrationBusinessLogic: RegistrationBusinessLogicProtocol {
     
     private let repository: LicensesRepository
     private let requiredPasswordLength = 12
-    var licenses: [LicenseType] = []
+    var licenses: [PilotLicense] = []
+    let persistance: Persistable
     
-    init(repository: LicensesRepository) {
+    init(repository: LicensesRepository,
+         persistance: Persistable) {
         self.repository = repository
+        self.persistance = persistance
     }
     
     func loadLicenses() async throws {
-        licenses = try await repository.getLicenses().compactMap({ license in
-            license.type
-        })
+        licenses = try await repository.getLicenses()
     }
     
     func validateName(name: String) -> Result<Void, Error> {
@@ -39,8 +41,8 @@ class RegistrationBusinessLogic: RegistrationBusinessLogicProtocol {
         return .failure(ValidationError.invalidName)
     }
     
-    func validateLicense(license: String) -> Result<Void, Error> {
-        if licenses.compactMap({ $0.rawValue }).contains(license) {
+    func validateLicense(license: PilotLicense) -> Result<Void, Error> {
+        if licenses.contains(license) {
             return .success(())
         }
         return .failure(ValidationError.invalidLicense)
@@ -69,5 +71,10 @@ class RegistrationBusinessLogic: RegistrationBusinessLogicProtocol {
     private func isPasswordFormatValid(password: String) -> Bool {
         let result = password.wholeMatch(of: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/)
         return result != nil
+    }
+    
+    func saveUser(username: String, license: PilotLicense) throws {
+        let user = User(name: username, license: license)
+        try persistance.saveValue(value: user, for: "user")
     }
 }

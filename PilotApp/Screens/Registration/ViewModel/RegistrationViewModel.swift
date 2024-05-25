@@ -16,10 +16,10 @@ import Combine
     @Published var passwordError: Error?
     @Published var verificationPassword = ""
     @Published var verificationPasswordError: Error?
-    @Published var selectedLicense = ""
-    @Published var licenseTypes: [String] = []
+    @Published var selectedLicense: PilotLicense?
+    @Published var licenses: [PilotLicense] = []
     @Published var licenseError: Error?
-    @Published var loadingError: Error?
+    @Published var applicationError: Error?
     @Published var isLoading = false
     
     private var cancellables = Set<AnyCancellable>()
@@ -36,9 +36,9 @@ import Combine
         }
         do {
             try await businessLogic.loadLicenses()
-            licenseTypes = businessLogic.licenses.compactMap({$0.rawValue.uppercased()})
+            licenses = businessLogic.licenses
         } catch {
-            loadingError =  RegistrationError.genericError
+            applicationError =  RegistrationError.genericError
         }
     }
     
@@ -91,7 +91,10 @@ import Combine
     
     private func validateLicense() {
         $selectedLicense.map { [unowned self] aLicense in
-            self.businessLogic.validateLicense(license: aLicense)
+            if let aLicense {
+                return self.businessLogic.validateLicense(license: aLicense)
+            }
+            return .failure(ValidationError.invalidLicense)
         }
         .sink(receiveValue: { result in
             switch result {
@@ -130,6 +133,14 @@ import Combine
     }
     
     func onRegister() {
-        //TODO: save registration data
+        guard let selectedLicense else {
+            applicationError = ValidationError.invalidLicense
+            return
+        }
+        do {
+            try businessLogic.saveUser(username: name, license: selectedLicense)
+        } catch {
+            applicationError = error
+        }
     }
 }

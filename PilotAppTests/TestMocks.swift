@@ -8,6 +8,14 @@
 import Foundation
 @testable import PilotApp
 
+class TestRegistrationBusinessLogic: RegistrationBusinessLogic {
+    
+    var isSaveUserCalled = false
+    override func saveUser(username: String, license: PilotLicense) throws {
+        isSaveUserCalled = true
+    }
+}
+
 class MockLicensesRepository: LicensesRepository {
     func getLicenses() async throws -> [PilotApp.PilotLicense] {
         [
@@ -24,6 +32,20 @@ class MockLicensesRepository: LicensesRepository {
                                      "A300",
                                      "B717"])
         ]
+    }
+}
+
+class MockPersistable: Persistable {
+    
+    var saveValueCalled = false
+    func saveValue<T: Encodable>(value: T, for key: String) throws {
+        saveValueCalled = true
+    }
+    
+    var getValueCalled = false
+    func getValue<T: Decodable>(for key: String) throws -> T? {
+        getValueCalled = true
+        return nil
     }
     
     

@@ -13,7 +13,8 @@ final class RegistrationBusinessLogicTests: XCTestCase {
     private var sut: RegistrationBusinessLogic!
 
     override func setUpWithError() throws {
-        sut = RegistrationBusinessLogic(repository: MockLicensesRepository())
+        sut = RegistrationBusinessLogic(repository: MockLicensesRepository(), 
+                                        persistance: MockPersistable())
     }
 
     override func tearDownWithError() throws {
@@ -25,4 +26,8 @@ final class RegistrationBusinessLogicTests: XCTestCase {
         XCTAssertEqual(3, sut.licenses.count)
     }
 
+    func testSaveUser() throws {
+        try sut.saveUser(username: "Giovanni", license: PilotLicense(type: .ppl, aircrafts: []))
+        XCTAssertTrue((sut.persistance as? MockPersistable)?.saveValueCalled == true)
+    }
 }
