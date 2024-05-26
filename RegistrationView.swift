@@ -64,6 +64,7 @@ struct RegistrationView: View {
             .textFieldStyle(.roundedBorder)
             .autocorrectionDisabled()
             .autocapitalization(.none)
+            .textContentType(.newPassword)
         if let error = viewModel.passwordError {
             buildErrorView(error: error)
         }
@@ -71,6 +72,7 @@ struct RegistrationView: View {
             .textFieldStyle(.roundedBorder)
             .autocorrectionDisabled()
             .autocapitalization(.none)
+            .textContentType(.newPassword)
         if let error = viewModel.verificationPasswordError {
             buildErrorView(error: error)
         }

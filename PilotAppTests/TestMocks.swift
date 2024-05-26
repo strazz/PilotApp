@@ -18,21 +18,27 @@ class TestRegistrationBusinessLogic: RegistrationBusinessLogic {
 }
 
 class MockLicensesRepository: LicensesRepository {
+    var forceError = false
     func getLicenses() async throws -> [PilotApp.PilotLicense] {
-        [
-            PilotLicense(type: .ppl,
-                         aircrafts: ["C152",
-                                     "C172",
-                                     "D40A"]),
-            PilotLicense(type: .atpl,
-                         aircrafts: ["B737",
-                                     "A380",
-                                     "B747"]),
-            PilotLicense(type: .mpl,
-                         aircrafts: ["A321",
-                                     "A300",
-                                     "B717"])
-        ]
+        if forceError {
+            throw ApplicationError.genericError
+        } else {
+           return [
+                PilotLicense(type: .ppl,
+                             aircrafts: ["C152",
+                                         "C172",
+                                         "D40A"]),
+                PilotLicense(type: .atpl,
+                             aircrafts: ["B737",
+                                         "A380",
+                                         "B747"]),
+                PilotLicense(type: .mpl,
+                             aircrafts: ["A321",
+                                         "A300",
+                                         "B717"])
+            ]
+        }
+        
     }
 }
 

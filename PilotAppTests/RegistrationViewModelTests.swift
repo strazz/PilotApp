@@ -11,13 +11,15 @@ import XCTest
 final class RegistrationViewModelTests: XCTestCase {
     
     private var sut: RegistrationViewModel!
+    private var repository: MockLicensesRepository!
     private var businessLogic: TestRegistrationBusinessLogic!
     private var navigationViewModel: NavigationViewModel!
 
     @MainActor override func setUpWithError() throws {
+        repository = MockLicensesRepository()
         navigationViewModel = NavigationViewModel(persistence: MockPersistable())
         businessLogic = TestRegistrationBusinessLogic(
-            repository: MockLicensesRepository(),
+            repository: repository,
             persistance: MockPersistable())
         sut = RegistrationViewModel(
             businessLogic: businessLogic
@@ -26,6 +28,7 @@ final class RegistrationViewModelTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
+        repository = nil
         navigationViewModel = nil
         businessLogic = nil
         sut = nil
@@ -155,6 +158,13 @@ final class RegistrationViewModelTests: XCTestCase {
     @MainActor func testLicensesLoaded() async throws {
         await sut.loadData()
         XCTAssertEqual(3, sut.licenses.count)
+    }
+    
+    //MARK: test licenses loading error:
+    @MainActor func testLoadingError() async throws {
+        repository.forceError = true
+        await sut.loadData()
+        XCTAssertEqual(ApplicationError.genericError, sut.applicationError as! ApplicationError)
     }
     
     //MARK: test save license called

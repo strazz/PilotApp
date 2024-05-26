@@ -9,6 +9,13 @@ import SwiftUI
 
 @main
 struct PilotAppApp: App {
+    
+    init() {
+        if ProcessInfo.processInfo.arguments.contains("UITest") {
+            UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+        }
+    }
+    
     var body: some Scene {
         WindowGroup {
             PilotAppViewFactory.buildContentView()
