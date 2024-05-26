@@ -34,7 +34,7 @@ final class RegistrationViewModelTests: XCTestCase {
     ///*
     //MARK: Name - Must contain at least one non-whitespace character.
     @MainActor func testValidName() throws {
-        sut.name = "Giovanni"
+        sut.name = "TestUser"
         XCTAssertNil(sut.nameError)
     }
     
@@ -98,8 +98,8 @@ final class RegistrationViewModelTests: XCTestCase {
     }
     
     @MainActor func testNoUsernamePassword() throws {
-        sut.name = "Giovanni"
-        sut.password = "A9sDk3fJ1lM2Giovanni"
+        sut.name = "TestUser"
+        sut.password = "A9sDk3fJ1lM2TestUser"
         XCTAssertEqual(ValidationError.passwordContainsUsername, sut.passwordError as! ValidationError)
     }
 
@@ -121,7 +121,7 @@ final class RegistrationViewModelTests: XCTestCase {
     //MARK: Register button must be enabled only if all validations succeeds
     @MainActor func testRegisterButtonEnabled() async {
         await sut.loadData()
-        sut.name = "Giovanni"
+        sut.name = "TestUser"
         sut.password = "A9sDk3fJ1lM2"
         sut.verificationPassword = "A9sDk3fJ1lM2"
         sut.selectedLicense = PilotLicense(type: .ppl, aircrafts: [])
@@ -129,7 +129,7 @@ final class RegistrationViewModelTests: XCTestCase {
     }
     
     @MainActor func testRegisterButtonDisabled() {
-        sut.name = "Giovanni"
+        sut.name = "TestUser"
         sut.password = "A9sDk3fJ1lM2"
         sut.verificationPassword = "A9sDk3fJ1lM"
         sut.selectedLicense = PilotLicense(type: .ppl, aircrafts: [])

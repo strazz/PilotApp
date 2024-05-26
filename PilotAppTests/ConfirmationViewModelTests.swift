@@ -46,6 +46,6 @@ final class ConfirmationViewModelTests: XCTestCase {
     }
     
     func testLicenseType() {
-        XCTAssertEqual(LicenseType.ppl, sut.license)
+        XCTAssertEqual(LicenseType.ppl.rawValue.uppercased(), sut.license)
     }
 }

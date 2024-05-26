@@ -27,8 +27,8 @@ final class RegistrationBusinessLogicTests: XCTestCase {
     }
 
     func testSaveUser() throws {
-        let result = try sut.saveUser(username: "Giovanni", license: PilotLicense(type: .ppl, aircrafts: []))
+        let result = try sut.saveUser(username: "TestUser", license: PilotLicense(type: .ppl, aircrafts: []))
         XCTAssertTrue((sut.persistance as? MockPersistable)?.saveValueCalled == true)
-        XCTAssertEqual(result.name, "Giovanni")
+        XCTAssertEqual(result.name, "TestUser")
     }
 }
