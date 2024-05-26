@@ -9,12 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        RegistrationView(
-            viewModel: RegistrationViewModel(
-                businessLogic: RegistrationBusinessLogic(repository: LocalLicensesRepository(), 
-                                                         persistance: UserDefaultsPersistance(name: nil))
-            )
-        )
+        NavigationView {
+            PilotAppViewFactory.buildRegistrationView()
+        }
     }
 }
 

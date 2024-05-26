@@ -93,9 +93,5 @@ struct RegistrationView: View {
 }
 
 #Preview {
-    RegistrationView(
-        viewModel: RegistrationViewModel(
-            businessLogic: RegistrationBusinessLogic(repository: LocalLicensesRepository(), persistance: UserDefaultsPersistance(name: nil))
-        )
-    )
+    PilotAppViewFactory.buildRegistrationView()
 }

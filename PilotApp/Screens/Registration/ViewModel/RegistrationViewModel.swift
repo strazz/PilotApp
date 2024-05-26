@@ -38,7 +38,7 @@ import Combine
             try await businessLogic.loadLicenses()
             licenses = businessLogic.licenses
         } catch {
-            applicationError =  RegistrationError.genericError
+            applicationError =  ApplicationError.genericError
         }
     }
     

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum RegistrationError: LocalizedError {
+enum ApplicationError: LocalizedError {
     case genericError
     
     var errorDescription: String? {
@@ -17,6 +17,10 @@ enum RegistrationError: LocalizedError {
 
 enum RepositoryError: LocalizedError {
     case urlNotFound
+    
+    var errorDescription: String? {
+        "The url was not found."
+    }
 }
 
 enum ValidationError: LocalizedError {
