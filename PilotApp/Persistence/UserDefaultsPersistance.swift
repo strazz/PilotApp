@@ -35,8 +35,11 @@ class UserDefaultsPersistance: Persistable {
 }
 
 extension UserDefaultsPersistance: UserPersistance {
-    func getUser() throws -> User? {
-        try getValue(for: userKey)
+    func getUser() throws -> User {
+        if let user: User = try getValue(for: userKey) {
+            return user
+        }
+        throw ApplicationError.userNotFoundError
     }
     
     func saveUser(user: User) throws {

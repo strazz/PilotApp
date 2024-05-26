@@ -11,8 +11,9 @@ import Foundation
 class TestRegistrationBusinessLogic: RegistrationBusinessLogic {
     
     var isSaveUserCalled = false
-    override func saveUser(username: String, license: PilotLicense) throws {
+    override func saveUser(username: String, license: PilotLicense) throws -> User {
         isSaveUserCalled = true
+        return User(name: "testUser", license: PilotLicense(type: .ppl, aircrafts: []))
     }
 }
 
@@ -36,7 +37,6 @@ class MockLicensesRepository: LicensesRepository {
 }
 
 class MockPersistable: Persistable {
-    
     var saveValueCalled = false
     func saveValue<T: Encodable>(value: T, for key: String) throws {
         saveValueCalled = true
@@ -59,8 +59,13 @@ extension MockPersistable: UserPersistance {
         try saveValue(value: user, for: "user")
     }
     
-    func getUser() throws -> PilotApp.User? {
-        nil
+    func getUser() throws -> PilotApp.User {
+        User(name: "testUser",
+             license: PilotLicense(type: .ppl,
+                                   aircrafts: [
+                                    "C152",
+                                    "C172",
+                                    "D40A"]))
     }
     
     func deleteUser() {

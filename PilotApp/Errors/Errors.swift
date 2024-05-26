@@ -9,9 +9,15 @@ import Foundation
 
 enum ApplicationError: LocalizedError {
     case genericError
+    case userNotFoundError
     
     var errorDescription: String? {
-        "An error occurred, please restart the app."
+        switch self {
+        case .genericError:
+            "An error occurred, please restart the app."
+        case .userNotFoundError:
+            "No user registered"
+        }
     }
 }
 

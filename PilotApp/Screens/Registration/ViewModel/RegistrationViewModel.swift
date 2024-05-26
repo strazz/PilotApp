@@ -140,8 +140,8 @@ import SwiftUI
             throw applicationError!
         }
         do {
-            try businessLogic.saveUser(username: name, license: selectedLicense)
-            navigationViewModel?.currentScreen = .confirmation
+            let user = try businessLogic.saveUser(username: name, license: selectedLicense)
+            navigationViewModel?.currentScreen = .confirmation(user: user)
         } catch {
             applicationError = error
             throw applicationError!

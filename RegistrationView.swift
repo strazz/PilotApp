@@ -87,13 +87,6 @@ struct RegistrationView: View {
         .buttonStyle(.bordered)
         .disabled(!viewModel.isRegisterButtonEnabled)
     }
-    
-    @ViewBuilder private func buildErrorView(error: Error) -> some View {
-        Text(error.localizedDescription)
-            .foregroundStyle(.red)
-            .fontWeight(.light)
-            .font(.caption)
-    }
 }
 
 #Preview {

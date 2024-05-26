@@ -163,6 +163,11 @@ final class RegistrationViewModelTests: XCTestCase {
         sut.selectedLicense = businessLogic.licenses.first
         try sut.onRegister()
         XCTAssertTrue(businessLogic.isSaveUserCalled)
-        XCTAssertEqual(Screen.confirmation, navigationViewModel.currentScreen)
+        switch navigationViewModel.currentScreen {
+        case .confirmation(_):
+            break
+        default:
+            XCTFail("expecting confirmation screen")
+        }
     }
 }

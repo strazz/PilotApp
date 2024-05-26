@@ -22,8 +22,8 @@ class PilotAppViewFactory {
         return RegistrationView(viewModel: viewModel)
     }
     
-    @MainActor static func buildConfirmationView(navigationViewModel: NavigationViewModel) -> some View {
-        let viewModel = ConfirmationViewModel(persistance: UserDefaultsPersistance(name: nil))
+    @MainActor static func buildConfirmationView(user: User, navigationViewModel: NavigationViewModel) -> some View {
+        let viewModel = ConfirmationViewModel(user: user, persistance: UserDefaultsPersistance(name: nil))
         viewModel.navigationViewModel = navigationViewModel
         return ConfirmationView(viewModel: viewModel)
     }

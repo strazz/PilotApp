@@ -9,7 +9,8 @@ import Foundation
 
 enum Screen {
     case registration
-    case confirmation
+    case confirmation(user: User)
+    case error(error: Error)
 }
 
 class NavigationViewModel: ObservableObject {
@@ -17,7 +18,21 @@ class NavigationViewModel: ObservableObject {
     private let persistence: UserPersistance
     
     init(persistence: UserPersistance) {
-        self.currentScreen = try? persistence.getUser() == nil ? .registration : .confirmation
         self.persistence = persistence
+        setInitialState()
+    }
+    
+    private func setInitialState() {
+        do {
+            let user = try persistence.getUser()
+            currentScreen = .confirmation(user: user)
+        } catch {
+            switch error {
+            case ApplicationError.userNotFoundError:
+                currentScreen = .registration
+            default:
+                currentScreen = .error(error: error)
+            }
+        }
     }
 }

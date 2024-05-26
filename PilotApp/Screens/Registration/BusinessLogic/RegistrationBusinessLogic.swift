@@ -13,7 +13,7 @@ protocol RegistrationBusinessLogicProtocol {
     func validateName(name: String) -> Result<Void, Error>
     func validateLicense(license: PilotLicense) -> Result<Void, Error>
     func validatePassword(username: String, password: String) -> Result<Void, Error>
-    func saveUser(username: String, license: PilotLicense) throws
+    func saveUser(username: String, license: PilotLicense) throws -> User
 }
 
 class RegistrationBusinessLogic: RegistrationBusinessLogicProtocol {
@@ -73,8 +73,9 @@ class RegistrationBusinessLogic: RegistrationBusinessLogicProtocol {
         return result != nil
     }
     
-    func saveUser(username: String, license: PilotLicense) throws {
+    func saveUser(username: String, license: PilotLicense) throws -> User {
         let user = User(name: username, license: license)
         try persistance.saveUser(user: user)
+        return user
     }
 }

@@ -10,10 +10,18 @@ import SwiftUI
 
 class ConfirmationViewModel: ObservableObject {
     weak var navigationViewModel: NavigationViewModel?
+    private let user: User
     private let persistance: UserPersistance
+    @Published var username: String
+    @Published var allowedAircrafts: [String] = []
+    @Published var license: String
     
-    init(persistance: UserPersistance) {
+    init(user: User, persistance: UserPersistance) {
+        self.user = user
         self.persistance = persistance
+        username = user.name
+        allowedAircrafts = user.license.aircrafts
+        license = user.license.type.rawValue.uppercased()
     }
     
     func onLogout() {

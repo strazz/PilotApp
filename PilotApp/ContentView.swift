@@ -15,8 +15,11 @@ struct ContentView: View {
             switch navigationViewModel.currentScreen {
             case .registration:
                 PilotAppViewFactory.buildRegistrationView(navigationViewModel: navigationViewModel)
-            case .confirmation:
-                PilotAppViewFactory.buildConfirmationView(navigationViewModel: navigationViewModel)
+            case .confirmation(let user):
+                PilotAppViewFactory.buildConfirmationView(user: user,
+                                                          navigationViewModel: navigationViewModel)
+            case .error(let error):
+                buildErrorView(error: error)
             case .none:
                 EmptyView()
             }

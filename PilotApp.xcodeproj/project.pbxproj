@@ -33,6 +33,7 @@
 		1FD2CE9C2C032B2800ECBAA5 /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CE9B2C032B2800ECBAA5 /* ConfirmationView.swift */; };
 		1FD2CE9E2C032CCD00ECBAA5 /* ConfirmationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CE9D2C032CCD00ECBAA5 /* ConfirmationViewModelTests.swift */; };
 		1FD2CEA12C032CF300ECBAA5 /* ConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CEA02C032CF300ECBAA5 /* ConfirmationViewModel.swift */; };
+		1FD2CEA52C033E6B00ECBAA5 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CEA42C033E6B00ECBAA5 /* ViewExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		1FD2CE9D2C032CCD00ECBAA5 /* ConfirmationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationViewModelTests.swift; sourceTree = "<group>"; };
 		1FD2CEA02C032CF300ECBAA5 /* ConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationViewModel.swift; sourceTree = "<group>"; };
 		1FD2CEA22C033D4000ECBAA5 /* PilotApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PilotApp.entitlements; sourceTree = "<group>"; };
+		1FD2CEA42C033E6B00ECBAA5 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				1FD2CEA22C033D4000ECBAA5 /* PilotApp.entitlements */,
+				1FD2CEA32C033E5D00ECBAA5 /* Extensions */,
 				1FD2CE942C03266100ECBAA5 /* Navigation */,
 				1FD2CE912C0324AF00ECBAA5 /* Factory */,
 				1FD2CE8A2C023EBE00ECBAA5 /* Persistence */,
@@ -306,6 +309,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		1FD2CEA32C033E5D00ECBAA5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1FD2CEA42C033E6B00ECBAA5 /* ViewExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -449,6 +460,7 @@
 				1FD2CE832C0232ED00ECBAA5 /* Errors.swift in Sources */,
 				1FD2CE9C2C032B2800ECBAA5 /* ConfirmationView.swift in Sources */,
 				1FD2CEA12C032CF300ECBAA5 /* ConfirmationViewModel.swift in Sources */,
+				1FD2CEA52C033E6B00ECBAA5 /* ViewExtensions.swift in Sources */,
 				1FD2CE442C01E06700ECBAA5 /* ContentView.swift in Sources */,
 				1FD2CE7D2C022F8900ECBAA5 /* PilotLicense.swift in Sources */,
 				1FD2CE422C01E06700ECBAA5 /* PilotAppApp.swift in Sources */,
