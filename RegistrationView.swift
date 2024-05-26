@@ -13,7 +13,7 @@ struct RegistrationView: View {
     var body: some View {
         VStack(spacing: 16) {
             if viewModel.isLoading {
-                ProgressView("Loading...")
+                ProgressView("label.loading".localized)
             } else {
                 buildNameField()
                 buildLicenseField()
@@ -26,7 +26,7 @@ struct RegistrationView: View {
             }       
         }
         .padding()
-        .navigationTitle("Register")
+        .navigationTitle("label.register".localized)
         .onAppear() {
             Task { @MainActor in
                 await viewModel.loadData()
@@ -35,7 +35,7 @@ struct RegistrationView: View {
     }
     
     @ViewBuilder private func buildNameField() -> some View {
-        TextField("Name", text: $viewModel.name)
+        TextField("label.name".localized, text: $viewModel.name)
             .textFieldStyle(.roundedBorder)
             .autocorrectionDisabled()
             .autocapitalization(.none)
@@ -46,8 +46,8 @@ struct RegistrationView: View {
     
     @ViewBuilder private func buildLicenseField() -> some View {
         HStack {
-            Text("Pilot license type:")
-            Picker("Pilot license type", selection: $viewModel.selectedLicense) {
+            Text("label.licensetype".localized)
+            Picker("label.licensetype".localized, selection: $viewModel.selectedLicense) {
                 ForEach(viewModel.licenses, id: \.self) { license in
                     Text(license.type.rawValue.uppercased()).tag(Optional(license))
                 }
@@ -60,14 +60,14 @@ struct RegistrationView: View {
     }
     
     @ViewBuilder private func buildPasswordField() -> some View {
-        SecureField("Password", text: $viewModel.password)
+        SecureField("label.password".localized, text: $viewModel.password)
             .textFieldStyle(.roundedBorder)
             .autocorrectionDisabled()
             .autocapitalization(.none)
         if let error = viewModel.passwordError {
             buildErrorView(error: error)
         }
-        SecureField("Password verification", text: $viewModel.verificationPassword)
+        SecureField("label.passwordverification".localized, text: $viewModel.verificationPassword)
             .textFieldStyle(.roundedBorder)
             .autocorrectionDisabled()
             .autocapitalization(.none)
@@ -77,7 +77,7 @@ struct RegistrationView: View {
     }
     
     @ViewBuilder private func buildRegisterButton() -> some View {
-        Button("Register") {
+        Button("label.register".localized) {
             do {
                 try viewModel.onRegister()
             } catch {

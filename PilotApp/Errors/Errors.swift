@@ -14,9 +14,9 @@ enum ApplicationError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .genericError:
-            "An error occurred, please restart the app."
+            "error.generic".localized
         case .userNotFoundError:
-            "No user registered"
+            "error.usernotfound".localized
         }
     }
 }
@@ -25,7 +25,7 @@ enum RepositoryError: LocalizedError {
     case urlNotFound
     
     var errorDescription: String? {
-        "The url was not found."
+        "error.urlnotfound".localized
     }
 }
 
@@ -41,19 +41,19 @@ enum ValidationError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidName:
-            "Must contain at least one non-whitespace character."
+            "error.username".localized
         case .invalidLicense:
-            "A valid type of pilot license should be inserted."
+            "error.license".localized
         case .emptyPassword:
-            "Password cannot be empty."
+            "error.emptypassword".localized
         case .passwordContainsUsername:
-            "Password should not contains username."
+            "error.userpassword".localized
         case .shortPassword:
-            "Password must be at least 12 characters."
+            "error.shortpassword".localized
         case .passwordFormat:
-            "Password must be a combination of uppercase, lowercase and numbers."
+            "error.formatpassword".localized
         case .verificationPassword:
-            "Must be identical to the password."
+            "error.verificationpassword".localized
         }
     }
 }

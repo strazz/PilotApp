@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FACF9E52C03772600E7F159 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 1FACF9E42C03772600E7F159 /* Localizable.xcstrings */; };
+		1FACF9E72C03794C00E7F159 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FACF9E62C03794C00E7F159 /* StringExtensions.swift */; };
 		1FD2CE422C01E06700ECBAA5 /* PilotAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CE412C01E06700ECBAA5 /* PilotAppApp.swift */; };
 		1FD2CE442C01E06700ECBAA5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CE432C01E06700ECBAA5 /* ContentView.swift */; };
 		1FD2CE462C01E06800ECBAA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FD2CE452C01E06800ECBAA5 /* Assets.xcassets */; };
@@ -54,6 +56,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1FACF9E42C03772600E7F159 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		1FACF9E62C03794C00E7F159 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		1FD2CE3E2C01E06700ECBAA5 /* PilotApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PilotApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FD2CE412C01E06700ECBAA5 /* PilotAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PilotAppApp.swift; sourceTree = "<group>"; };
 		1FD2CE432C01E06700ECBAA5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -238,6 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				1FD2CE782C022F3D00ECBAA5 /* licenses.json */,
+				1FACF9E42C03772600E7F159 /* Localizable.xcstrings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -313,6 +318,7 @@
 			isa = PBXGroup;
 			children = (
 				1FD2CEA42C033E6B00ECBAA5 /* ViewExtensions.swift */,
+				1FACF9E62C03794C00E7F159 /* StringExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -423,6 +429,7 @@
 			files = (
 				1FD2CE792C022F3D00ECBAA5 /* licenses.json in Resources */,
 				1FD2CE492C01E06800ECBAA5 /* Preview Assets.xcassets in Resources */,
+				1FACF9E52C03772600E7F159 /* Localizable.xcstrings in Resources */,
 				1FD2CE462C01E06800ECBAA5 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -460,6 +467,7 @@
 				1FD2CE832C0232ED00ECBAA5 /* Errors.swift in Sources */,
 				1FD2CE9C2C032B2800ECBAA5 /* ConfirmationView.swift in Sources */,
 				1FD2CEA12C032CF300ECBAA5 /* ConfirmationViewModel.swift in Sources */,
+				1FACF9E72C03794C00E7F159 /* StringExtensions.swift in Sources */,
 				1FD2CEA52C033E6B00ECBAA5 /* ViewExtensions.swift in Sources */,
 				1FD2CE442C01E06700ECBAA5 /* ContentView.swift in Sources */,
 				1FD2CE7D2C022F8900ECBAA5 /* PilotLicense.swift in Sources */,

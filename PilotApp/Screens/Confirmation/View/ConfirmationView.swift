@@ -22,12 +22,12 @@ struct ConfirmationView: View {
             
         }
         .padding()
-        .navigationTitle("Confirmation")
+        .navigationTitle("label.confirmation".localized)
     }
     
     @ViewBuilder private func buildLogoutButton() -> some View {
         VStack(alignment: .center) {
-            Button("Logout") {
+            Button("label.logout".localized) {
                 viewModel.onLogout()
             }
             .buttonStyle(.bordered)
@@ -36,10 +36,10 @@ struct ConfirmationView: View {
     
     @ViewBuilder private func buildWelcomeView() -> some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("User \(viewModel.username) is registered")
-            Text("Welcome \(viewModel.username)!")
-            Text("Your licence is \(viewModel.license)")
-            Text("Your allowed aircrafts are:")
+            Text(String(format: "label.format.userregistered".localized, viewModel.username))
+            Text(String(format: "label.format.welcome".localized, viewModel.username))
+            Text(String(format: "label.format.license".localized, viewModel.license))
+            Text(String(format: "label.allowedaircrafts".localized, viewModel.allowedAircrafts))
             List(viewModel.allowedAircrafts, id: \.self) { item in
                 Text(item)
             }
