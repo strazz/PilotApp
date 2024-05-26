@@ -8,13 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var navigationViewModel: NavigationViewModel
+    
     var body: some View {
         NavigationView {
-            PilotAppViewFactory.buildRegistrationView()
+            switch navigationViewModel.currentScreen {
+            case .registration:
+                PilotAppViewFactory.buildRegistrationView()
+            case .confirmation:
+                EmptyView()
+            case .none:
+                EmptyView()
+            }
         }
+        .environmentObject(navigationViewModel)
     }
 }
 
 #Preview {
-    ContentView()
+    PilotAppViewFactory.buildContentView()
 }

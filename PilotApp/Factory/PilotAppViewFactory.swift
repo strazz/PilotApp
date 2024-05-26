@@ -9,6 +9,11 @@ import Foundation
 import SwiftUI
 
 class PilotAppViewFactory {
+    @MainActor @ViewBuilder static func buildContentView() -> some View {
+        let navigationViewModel = NavigationViewModel(persistence: UserDefaultsPersistance(name: nil))
+        ContentView(navigationViewModel: navigationViewModel)
+    }
+    
     @MainActor @ViewBuilder static func buildRegistrationView() -> some View {
         let businessLogic = RegistrationBusinessLogic(repository: LocalLicensesRepository(),
                                                       persistance: UserDefaultsPersistance(name: nil))

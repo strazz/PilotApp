@@ -8,6 +8,7 @@
 import Foundation
 
 class UserDefaultsPersistance: Persistable {
+    private let userKey = "user"
     private let instance: UserDefaults
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
@@ -26,5 +27,15 @@ class UserDefaultsPersistance: Persistable {
             return nil
         }
         return try decoder.decode(T.self, from: savedValue)
+    }
+}
+
+extension UserDefaultsPersistance: UserPersistance {
+    func getUser() throws -> User? {
+        try getValue(for: userKey)
+    }
+    
+    func saveUser(user: User) throws {
+        try saveValue(value: user, for: userKey)
     }
 }

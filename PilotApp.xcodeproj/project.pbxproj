@@ -28,6 +28,8 @@
 		1FD2CE8E2C023EFB00ECBAA5 /* UserDefaultsPersistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CE8D2C023EFB00ECBAA5 /* UserDefaultsPersistance.swift */; };
 		1FD2CE902C023F5E00ECBAA5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CE8F2C023F5E00ECBAA5 /* User.swift */; };
 		1FD2CE932C0324C300ECBAA5 /* PilotAppViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CE922C0324C300ECBAA5 /* PilotAppViewFactory.swift */; };
+		1FD2CE962C03267900ECBAA5 /* NavigationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CE952C03267900ECBAA5 /* NavigationViewModel.swift */; };
+		1FD2CE982C03289E00ECBAA5 /* UserPersistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CE972C03289E00ECBAA5 /* UserPersistance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +74,8 @@
 		1FD2CE8D2C023EFB00ECBAA5 /* UserDefaultsPersistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsPersistance.swift; sourceTree = "<group>"; };
 		1FD2CE8F2C023F5E00ECBAA5 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		1FD2CE922C0324C300ECBAA5 /* PilotAppViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PilotAppViewFactory.swift; sourceTree = "<group>"; };
+		1FD2CE952C03267900ECBAA5 /* NavigationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewModel.swift; sourceTree = "<group>"; };
+		1FD2CE972C03289E00ECBAA5 /* UserPersistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPersistance.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +126,7 @@
 		1FD2CE402C01E06700ECBAA5 /* PilotApp */ = {
 			isa = PBXGroup;
 			children = (
+				1FD2CE942C03266100ECBAA5 /* Navigation */,
 				1FD2CE912C0324AF00ECBAA5 /* Factory */,
 				1FD2CE8A2C023EBE00ECBAA5 /* Persistence */,
 				1FD2CE812C0232DE00ECBAA5 /* Errors */,
@@ -245,6 +250,7 @@
 			children = (
 				1FD2CE8B2C023EDC00ECBAA5 /* Persistable.swift */,
 				1FD2CE8D2C023EFB00ECBAA5 /* UserDefaultsPersistance.swift */,
+				1FD2CE972C03289E00ECBAA5 /* UserPersistance.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -255,6 +261,14 @@
 				1FD2CE922C0324C300ECBAA5 /* PilotAppViewFactory.swift */,
 			);
 			path = Factory;
+			sourceTree = "<group>";
+		};
+		1FD2CE942C03266100ECBAA5 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				1FD2CE952C03267900ECBAA5 /* NavigationViewModel.swift */,
+			);
+			path = Navigation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -388,8 +402,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FD2CE982C03289E00ECBAA5 /* UserPersistance.swift in Sources */,
 				1FD2CE932C0324C300ECBAA5 /* PilotAppViewFactory.swift in Sources */,
 				1FD2CE8C2C023EDC00ECBAA5 /* Persistable.swift in Sources */,
+				1FD2CE962C03267900ECBAA5 /* NavigationViewModel.swift in Sources */,
 				1FD2CE712C01E12F00ECBAA5 /* RegistrationView.swift in Sources */,
 				1FD2CE8E2C023EFB00ECBAA5 /* UserDefaultsPersistance.swift in Sources */,
 				1FD2CE742C01E18B00ECBAA5 /* RegistrationViewModel.swift in Sources */,

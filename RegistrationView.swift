@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RegistrationView: View {
+    @EnvironmentObject var navigationViewModel: NavigationViewModel
     @ObservedObject var viewModel: RegistrationViewModel
     
     var body: some View {

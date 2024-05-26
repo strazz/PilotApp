@@ -21,10 +21,10 @@ class RegistrationBusinessLogic: RegistrationBusinessLogicProtocol {
     private let repository: LicensesRepository
     private let requiredPasswordLength = 12
     var licenses: [PilotLicense] = []
-    let persistance: Persistable
+    let persistance: UserPersistance
     
     init(repository: LicensesRepository,
-         persistance: Persistable) {
+         persistance: UserPersistance) {
         self.repository = repository
         self.persistance = persistance
     }
@@ -75,6 +75,6 @@ class RegistrationBusinessLogic: RegistrationBusinessLogicProtocol {
     
     func saveUser(username: String, license: PilotLicense) throws {
         let user = User(name: username, license: license)
-        try persistance.saveValue(value: user, for: "user")
+        try persistance.saveUser(user: user)
     }
 }
