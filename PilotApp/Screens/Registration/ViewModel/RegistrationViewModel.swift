@@ -7,9 +7,11 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 @MainActor class RegistrationViewModel: ObservableObject {
     private let businessLogic: RegistrationBusinessLogicProtocol
+    weak var navigationViewModel: NavigationViewModel?
     @Published var name = ""
     @Published var nameError: Error?
     @Published var password = ""
@@ -132,15 +134,17 @@ import Combine
         licenseError == nil
     }
     
-    func onRegister() {
+    func onRegister() throws {
         guard let selectedLicense else {
             applicationError = ValidationError.invalidLicense
-            return
+            throw applicationError!
         }
         do {
             try businessLogic.saveUser(username: name, license: selectedLicense)
+            navigationViewModel?.currentScreen = .confirmation
         } catch {
             applicationError = error
+            throw applicationError!
         }
     }
 }

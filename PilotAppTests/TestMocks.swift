@@ -48,5 +48,22 @@ class MockPersistable: Persistable {
         return nil
     }
     
+    var removeValueCalled = false
+    func removeValue(for key: String) {
+        removeValueCalled = true
+    }
+}
+
+extension MockPersistable: UserPersistance {
+    func saveUser(user: PilotApp.User) throws {
+        try saveValue(value: user, for: "user")
+    }
     
+    func getUser() throws -> PilotApp.User? {
+        nil
+    }
+    
+    func deleteUser() {
+        removeValue(for: "user")
+    }
 }

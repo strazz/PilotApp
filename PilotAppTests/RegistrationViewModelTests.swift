@@ -12,17 +12,21 @@ final class RegistrationViewModelTests: XCTestCase {
     
     private var sut: RegistrationViewModel!
     private var businessLogic: TestRegistrationBusinessLogic!
+    private var navigationViewModel: NavigationViewModel!
 
     @MainActor override func setUpWithError() throws {
+        navigationViewModel = NavigationViewModel(persistence: MockPersistable())
         businessLogic = TestRegistrationBusinessLogic(
             repository: MockLicensesRepository(),
             persistance: MockPersistable())
         sut = RegistrationViewModel(
             businessLogic: businessLogic
         )
+        sut.navigationViewModel = navigationViewModel
     }
 
     override func tearDownWithError() throws {
+        navigationViewModel = nil
         businessLogic = nil
         sut = nil
     }
@@ -157,7 +161,8 @@ final class RegistrationViewModelTests: XCTestCase {
     @MainActor func testOnRegister() async throws {
         await sut.loadData()
         sut.selectedLicense = businessLogic.licenses.first
-        sut.onRegister()
+        try sut.onRegister()
         XCTAssertTrue(businessLogic.isSaveUserCalled)
+        XCTAssertEqual(Screen.confirmation, navigationViewModel.currentScreen)
     }
 }

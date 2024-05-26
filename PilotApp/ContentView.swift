@@ -14,14 +14,13 @@ struct ContentView: View {
         NavigationView {
             switch navigationViewModel.currentScreen {
             case .registration:
-                PilotAppViewFactory.buildRegistrationView()
+                PilotAppViewFactory.buildRegistrationView(navigationViewModel: navigationViewModel)
             case .confirmation:
-                EmptyView()
+                PilotAppViewFactory.buildConfirmationView(navigationViewModel: navigationViewModel)
             case .none:
                 EmptyView()
             }
         }
-        .environmentObject(navigationViewModel)
     }
 }
 

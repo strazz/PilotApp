@@ -9,15 +9,22 @@ import Foundation
 import SwiftUI
 
 class PilotAppViewFactory {
-    @MainActor @ViewBuilder static func buildContentView() -> some View {
+    @MainActor static func buildContentView() -> some View {
         let navigationViewModel = NavigationViewModel(persistence: UserDefaultsPersistance(name: nil))
-        ContentView(navigationViewModel: navigationViewModel)
+        return ContentView(navigationViewModel: navigationViewModel)
     }
     
-    @MainActor @ViewBuilder static func buildRegistrationView() -> some View {
+    @MainActor static func buildRegistrationView(navigationViewModel: NavigationViewModel) -> some View {
         let businessLogic = RegistrationBusinessLogic(repository: LocalLicensesRepository(),
                                                       persistance: UserDefaultsPersistance(name: nil))
         let viewModel = RegistrationViewModel(businessLogic: businessLogic)
-        RegistrationView(viewModel: viewModel)
+        viewModel.navigationViewModel = navigationViewModel
+        return RegistrationView(viewModel: viewModel)
+    }
+    
+    @MainActor static func buildConfirmationView(navigationViewModel: NavigationViewModel) -> some View {
+        let viewModel = ConfirmationViewModel(persistance: UserDefaultsPersistance(name: nil))
+        viewModel.navigationViewModel = navigationViewModel
+        return ConfirmationView(viewModel: viewModel)
     }
 }

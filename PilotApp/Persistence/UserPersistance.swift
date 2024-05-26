@@ -10,4 +10,5 @@ import Foundation
 protocol UserPersistance {
     func saveUser(user: User) throws
     func getUser() throws -> User?
+    func deleteUser()
 }

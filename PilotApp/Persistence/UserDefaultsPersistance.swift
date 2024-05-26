@@ -28,6 +28,10 @@ class UserDefaultsPersistance: Persistable {
         }
         return try decoder.decode(T.self, from: savedValue)
     }
+    
+    func removeValue(for key: String) {
+        instance.removeObject(forKey: key)
+    }
 }
 
 extension UserDefaultsPersistance: UserPersistance {
@@ -37,5 +41,9 @@ extension UserDefaultsPersistance: UserPersistance {
     
     func saveUser(user: User) throws {
         try saveValue(value: user, for: userKey)
+    }
+    
+    func deleteUser() {
+        removeValue(for: userKey)
     }
 }

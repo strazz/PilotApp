@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct RegistrationView: View {
-    @EnvironmentObject var navigationViewModel: NavigationViewModel
     @ObservedObject var viewModel: RegistrationViewModel
     
     var body: some View {
@@ -35,7 +34,7 @@ struct RegistrationView: View {
         }
     }
     
-    @ViewBuilder func buildNameField() -> some View {
+    @ViewBuilder private func buildNameField() -> some View {
         TextField("Name", text: $viewModel.name)
             .textFieldStyle(.roundedBorder)
             .autocorrectionDisabled()
@@ -45,7 +44,7 @@ struct RegistrationView: View {
         }
     }
     
-    @ViewBuilder func buildLicenseField() -> some View {
+    @ViewBuilder private func buildLicenseField() -> some View {
         HStack {
             Text("Pilot license type:")
             Picker("Pilot license type", selection: $viewModel.selectedLicense) {
@@ -60,7 +59,7 @@ struct RegistrationView: View {
         }
     }
     
-    @ViewBuilder func buildPasswordField() -> some View {
+    @ViewBuilder private func buildPasswordField() -> some View {
         SecureField("Password", text: $viewModel.password)
             .textFieldStyle(.roundedBorder)
             .autocorrectionDisabled()
@@ -77,15 +76,19 @@ struct RegistrationView: View {
         }
     }
     
-    @ViewBuilder func buildRegisterButton() -> some View {
+    @ViewBuilder private func buildRegisterButton() -> some View {
         Button("Register") {
-            viewModel.onRegister()
+            do {
+                try viewModel.onRegister()
+            } catch {
+                print(error)
+            }
         }
         .buttonStyle(.bordered)
         .disabled(!viewModel.isRegisterButtonEnabled)
     }
     
-    @ViewBuilder func buildErrorView(error: Error) -> some View {
+    @ViewBuilder private func buildErrorView(error: Error) -> some View {
         Text(error.localizedDescription)
             .foregroundStyle(.red)
             .fontWeight(.light)
@@ -94,5 +97,5 @@ struct RegistrationView: View {
 }
 
 #Preview {
-    PilotAppViewFactory.buildRegistrationView()
+    PilotAppViewFactory.buildRegistrationView(navigationViewModel: NavigationViewModel(persistence: UserDefaultsPersistance(name: nil)))
 }
