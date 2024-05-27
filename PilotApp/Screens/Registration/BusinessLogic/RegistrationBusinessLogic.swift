@@ -17,65 +17,38 @@ protocol RegistrationBusinessLogicProtocol {
 }
 
 class RegistrationBusinessLogic: RegistrationBusinessLogicProtocol {
-    
     private let repository: LicensesRepository
-    private let requiredPasswordLength = 12
     var licenses: [PilotLicense] = []
     let persistance: UserPersistance
+    let validator: FormValidatorProtocol
     
     init(repository: LicensesRepository,
-         persistance: UserPersistance) {
+         persistance: UserPersistance,
+         validator: FormValidatorProtocol) {
         self.repository = repository
         self.persistance = persistance
+        self.validator = validator
     }
     
     func loadLicenses() async throws {
         licenses = try await repository.getLicenses()
     }
     
-    func validateName(name: String) -> Result<Void, Error> {
-        let result = name.wholeMatch(of: /^.*\S.*$/)
-        if result != nil {
-            return .success(())
-        }
-        return .failure(ValidationError.invalidName)
-    }
-    
-    func validateLicense(license: PilotLicense) -> Result<Void, Error> {
-        if licenses.contains(license) {
-            return .success(())
-        }
-        return .failure(ValidationError.invalidLicense)
-    }
-    
-    func validatePassword(username: String, password: String) -> Result<Void, Error> {
-        if password.isEmpty {
-            return .failure(ValidationError.emptyPassword)
-        }
-        if password.contains(username) {
-            return .failure(ValidationError.passwordContainsUsername)
-        }
-        if !isPasswordLongEnough(password: password) {
-            return .failure(ValidationError.shortPassword)
-        }
-        if !isPasswordFormatValid(password: password) {
-            return .failure(ValidationError.passwordFormat)
-        }
-        return .success(())
-    }
-    
-    private func isPasswordLongEnough(password: String) -> Bool {
-        password.count >= requiredPasswordLength
-    }
-    
-    private func isPasswordFormatValid(password: String) -> Bool {
-        let result = password.wholeMatch(of: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/)
-        return result != nil
-    }
-    
     func saveUser(username: String, license: PilotLicense) throws -> User {
         let user = User(name: username, license: license)
         try persistance.saveUser(user: user)
         return user
+    }
+    
+    func validateName(name: String) -> Result<Void, any Error> {
+        validator.validateName(name: name)
+    }
+    
+    func validateLicense(license: PilotLicense) -> Result<Void, any Error> {
+        validator.validateLicense(license, in: licenses)
+    }
+    
+    func validatePassword(username: String, password: String) -> Result<Void, any Error> {
+        validator.validatePassword(username: username, password: password)
     }
 }

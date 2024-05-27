@@ -14,7 +14,8 @@ final class RegistrationBusinessLogicTests: XCTestCase {
 
     override func setUpWithError() throws {
         sut = RegistrationBusinessLogic(repository: MockLicensesRepository(), 
-                                        persistance: MockPersistable())
+                                        persistance: MockPersistable(), 
+                                        validator: MockFormValidator())
     }
 
     override func tearDownWithError() throws {

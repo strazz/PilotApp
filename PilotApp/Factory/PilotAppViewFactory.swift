@@ -16,7 +16,8 @@ class PilotAppViewFactory {
     
     @MainActor static func buildRegistrationView(navigationViewModel: NavigationViewModel) -> some View {
         let businessLogic = RegistrationBusinessLogic(repository: LocalLicensesRepository(),
-                                                      persistance: UserDefaultsPersistance(name: nil))
+                                                      persistance: UserDefaultsPersistance(name: nil), 
+                                                      validator: FormValidator())
         let viewModel = RegistrationViewModel(businessLogic: businessLogic)
         viewModel.navigationViewModel = navigationViewModel
         return RegistrationView(viewModel: viewModel)

@@ -20,7 +20,8 @@ final class RegistrationViewModelTests: XCTestCase {
         navigationViewModel = NavigationViewModel(persistence: MockPersistable())
         businessLogic = TestRegistrationBusinessLogic(
             repository: repository,
-            persistance: MockPersistable())
+            persistance: MockPersistable(), 
+            validator: FormValidator())
         sut = RegistrationViewModel(
             businessLogic: businessLogic
         )

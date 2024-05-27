@@ -78,3 +78,19 @@ extension MockPersistable: UserPersistance {
         removeValue(for: "user")
     }
 }
+
+class MockFormValidator: FormValidatorProtocol {
+    func validateName(name: String) -> Result<Void, any Error> {
+        .success(())
+    }
+    
+    func validateLicense(_ license: PilotApp.PilotLicense, in licenses: [PilotApp.PilotLicense]) -> Result<Void, any Error> {
+        .success(())
+    }
+    
+    func validatePassword(username: String, password: String) -> Result<Void, any Error> {
+        .success(())
+    }
+    
+    
+}

@@ -35,6 +35,8 @@
 		1FD2CE9E2C032CCD00ECBAA5 /* ConfirmationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CE9D2C032CCD00ECBAA5 /* ConfirmationViewModelTests.swift */; };
 		1FD2CEA12C032CF300ECBAA5 /* ConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CEA02C032CF300ECBAA5 /* ConfirmationViewModel.swift */; };
 		1FD2CEA52C033E6B00ECBAA5 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CEA42C033E6B00ECBAA5 /* ViewExtensions.swift */; };
+		1FFDD0142C053D3E0082B59A /* FormValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFDD0132C053D3E0082B59A /* FormValidator.swift */; };
+		1FFDD0182C0541620082B59A /* FormValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFDD0172C0541620082B59A /* FormValidatorTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +89,8 @@
 		1FD2CEA02C032CF300ECBAA5 /* ConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationViewModel.swift; sourceTree = "<group>"; };
 		1FD2CEA22C033D4000ECBAA5 /* PilotApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PilotApp.entitlements; sourceTree = "<group>"; };
 		1FD2CEA42C033E6B00ECBAA5 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
+		1FFDD0132C053D3E0082B59A /* FormValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidator.swift; sourceTree = "<group>"; };
+		1FFDD0172C0541620082B59A /* FormValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidatorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +175,7 @@
 				1FD2CE862C02398C00ECBAA5 /* RegistrationBusinessLogicTests.swift */,
 				1FD2CE882C02399B00ECBAA5 /* TestMocks.swift */,
 				1FD2CE9D2C032CCD00ECBAA5 /* ConfirmationViewModelTests.swift */,
+				1FFDD0172C0541620082B59A /* FormValidatorTests.swift */,
 			);
 			path = PilotAppTests;
 			sourceTree = "<group>";
@@ -231,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				1FD2CE752C01EE9100ECBAA5 /* RegistrationBusinessLogic.swift */,
+				1FFDD0132C053D3E0082B59A /* FormValidator.swift */,
 			);
 			path = BusinessLogic;
 			sourceTree = "<group>";
@@ -469,6 +475,7 @@
 				1FD2CE442C01E06700ECBAA5 /* ContentView.swift in Sources */,
 				1FD2CE7D2C022F8900ECBAA5 /* PilotLicense.swift in Sources */,
 				1FD2CE422C01E06700ECBAA5 /* PilotAppApp.swift in Sources */,
+				1FFDD0142C053D3E0082B59A /* FormValidator.swift in Sources */,
 				1FD2CE902C023F5E00ECBAA5 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -479,6 +486,7 @@
 			files = (
 				1FD2CE9E2C032CCD00ECBAA5 /* ConfirmationViewModelTests.swift in Sources */,
 				1FD2CE532C01E06800ECBAA5 /* RegistrationViewModelTests.swift in Sources */,
+				1FFDD0182C0541620082B59A /* FormValidatorTests.swift in Sources */,
 				1FD2CE852C0236A200ECBAA5 /* LocalRepositoryTests.swift in Sources */,
 				1FD2CE872C02398C00ECBAA5 /* RegistrationBusinessLogicTests.swift in Sources */,
 				1FD2CE892C02399B00ECBAA5 /* TestMocks.swift in Sources */,
