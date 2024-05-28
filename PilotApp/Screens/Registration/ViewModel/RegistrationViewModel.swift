@@ -144,7 +144,7 @@ import SwiftUI
             navigationViewModel?.currentScreen = .confirmation(user: user)
         } catch {
             applicationError = error
-            throw applicationError!
+            throw error
         }
     }
 }

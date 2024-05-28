@@ -20,7 +20,7 @@ final class RegistrationViewModelTests: XCTestCase {
         navigationViewModel = NavigationViewModel(persistence: MockPersistable())
         businessLogic = TestRegistrationBusinessLogic(
             repository: repository,
-            persistance: MockPersistable(), 
+            persistance: UserDefaultsPersistance(name: "test"), 
             validator: FormValidator())
         sut = RegistrationViewModel(
             businessLogic: businessLogic
@@ -142,15 +142,16 @@ final class RegistrationViewModelTests: XCTestCase {
     
     ///*
     //MARK: test the loading state of the viewModel
-    @MainActor func testViewModelIsLoading() async {
+    @MainActor func testViewModelIsLoading() async throws {
         XCTAssertFalse(sut.isLoading)
         let expectation = XCTestExpectation(description: "loading")
         Task {
             await sut.loadData()
             expectation.fulfill()
         }
-        await Task.yield()
-        XCTAssertTrue(sut.isLoading)
+        Task {
+            XCTAssertTrue(sut.isLoading)
+        }
         await fulfillment(of: [expectation], timeout: 1)
         XCTAssertFalse(sut.isLoading)
     }

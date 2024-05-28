@@ -11,12 +11,18 @@ import XCTest
 final class ConfirmationViewModelTests: XCTestCase {
     private var sut: ConfirmationViewModel!
     private var navigationViewModel: NavigationViewModel!
-    private var persistance: MockPersistable!
+    private var persistance: UserDefaultsPersistance!
 
     override func setUpWithError() throws {
-        persistance = MockPersistable()
+        persistance = UserDefaultsPersistance(name: "test")
         navigationViewModel = NavigationViewModel(persistence: MockPersistable())
-        let user = try! persistance.getUser()
+        let user = User(name: "testUser",
+                        license: PilotLicense(type: .ppl,
+                                              aircrafts: [
+                                               "C152",
+                                               "C172",
+                                               "D40A"]))
+        try! persistance.saveUser(user: user)
         sut = ConfirmationViewModel(user: user, persistance: persistance)
         sut.navigationViewModel = navigationViewModel
     }
@@ -28,7 +34,12 @@ final class ConfirmationViewModelTests: XCTestCase {
 
     func testLogout() throws {
         sut.onLogout()
-        XCTAssertTrue(persistance.removeValueCalled)
+        do {
+            let _ = try persistance.getUser()
+            XCTFail()
+        } catch {
+            XCTAssertEqual(ApplicationError.userNotFoundError, error as! ApplicationError)
+        }
         switch navigationViewModel.currentScreen {
         case .registration:
             break

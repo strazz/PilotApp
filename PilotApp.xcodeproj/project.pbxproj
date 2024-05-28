@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1FACF9E52C03772600E7F159 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 1FACF9E42C03772600E7F159 /* Localizable.xcstrings */; };
 		1FACF9E72C03794C00E7F159 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FACF9E62C03794C00E7F159 /* StringExtensions.swift */; };
-		1FB867612C0388AB00DAF6F0 /* PilotAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB867602C0388AB00DAF6F0 /* PilotAppUITests.swift */; };
 		1FD2CE422C01E06700ECBAA5 /* PilotAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CE412C01E06700ECBAA5 /* PilotAppApp.swift */; };
 		1FD2CE442C01E06700ECBAA5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CE432C01E06700ECBAA5 /* ContentView.swift */; };
 		1FD2CE462C01E06800ECBAA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FD2CE452C01E06800ECBAA5 /* Assets.xcassets */; };
@@ -37,6 +36,7 @@
 		1FD2CEA52C033E6B00ECBAA5 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2CEA42C033E6B00ECBAA5 /* ViewExtensions.swift */; };
 		1FFDD0142C053D3E0082B59A /* FormValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFDD0132C053D3E0082B59A /* FormValidator.swift */; };
 		1FFDD0182C0541620082B59A /* FormValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFDD0172C0541620082B59A /* FormValidatorTests.swift */; };
+		1FFDD01F2C0688670082B59A /* PilotAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFDD01E2C0688670082B59A /* PilotAppUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,7 +59,6 @@
 /* Begin PBXFileReference section */
 		1FACF9E42C03772600E7F159 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		1FACF9E62C03794C00E7F159 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
-		1FB867602C0388AB00DAF6F0 /* PilotAppUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PilotAppUITests.swift; path = ../../../../.Trash/PilotAppUITests.swift; sourceTree = "<group>"; };
 		1FD2CE3E2C01E06700ECBAA5 /* PilotApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PilotApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FD2CE412C01E06700ECBAA5 /* PilotAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PilotAppApp.swift; sourceTree = "<group>"; };
 		1FD2CE432C01E06700ECBAA5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -91,6 +90,7 @@
 		1FD2CEA42C033E6B00ECBAA5 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		1FFDD0132C053D3E0082B59A /* FormValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidator.swift; sourceTree = "<group>"; };
 		1FFDD0172C0541620082B59A /* FormValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidatorTests.swift; sourceTree = "<group>"; };
+		1FFDD01E2C0688670082B59A /* PilotAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PilotAppUITests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,7 +183,7 @@
 		1FD2CE5B2C01E06800ECBAA5 /* PilotAppUITests */ = {
 			isa = PBXGroup;
 			children = (
-				1FB867602C0388AB00DAF6F0 /* PilotAppUITests.swift */,
+				1FFDD01E2C0688670082B59A /* PilotAppUITests.swift */,
 			);
 			path = PilotAppUITests;
 			sourceTree = "<group>";
@@ -401,6 +401,7 @@
 					};
 					1FD2CE572C01E06800ECBAA5 = {
 						CreatedOnToolsVersion = 15.4;
+						LastSwiftMigration = 1540;
 						TestTargetID = 1FD2CE3D2C01E06700ECBAA5;
 					};
 				};
@@ -497,7 +498,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FB867612C0388AB00DAF6F0 /* PilotAppUITests.swift in Sources */,
+				1FFDD01F2C0688670082B59A /* PilotAppUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -740,6 +741,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 284M42BD2D;
@@ -748,6 +750,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.giovanni.PilotAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = PilotApp;
@@ -758,6 +761,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 284M42BD2D;
