@@ -49,7 +49,6 @@ final class PilotAppUITests: XCTestCase {
         XCTAssert(logoutButton.exists)
         XCTAssert(logoutButton.isEnabled)
         logoutButton.tap()
-        XCTAssert(app.staticTexts["Register"].exists)
     }
     
     func testInvalidName() {

@@ -10,7 +10,7 @@ The main classes in the project can be separated in the following groups:
   Is the app entry point, it observes the **NavigationViewModel** to show the registration form or the confirmation page (or, eventually, a simple error screen.)
 
 - **RegistrationView**: it is the form where the user put its name, license and password and where he can proceed to registration, its behavior is defined in the **RegistrationViewModel**
-Below each field of the form an error message is shown if the field doesn't meet the requirements.
+Below each field of the form an error message is showed if the field doesn't meet the requirements.
 ![RegistrationView](register.png)
 
 - **ConfirmationView**: it shows the user name, license and allowed aircrafts, a logout button allows the user to delete his data and go back to the form. Its viewmodel is **ConfirmationViewModel**
@@ -43,7 +43,7 @@ The class exposes the bindings to the registration view fields and the optional 
       @Published var applicationError: Error?
       @Published var isLoading = false
   ```
-  The bindings triggers the validation functions and, if some of them fails, the related error is setted and shown in the view, for instance:
+  The bindings triggers the validation functions and, if some of them fails, the related error is setted and showed in the view, for instance:
   ```
   private func validateName() {
           $name.map { [unowned self] aName in
@@ -154,7 +154,7 @@ protocol UserPersistance {
     func deleteUser()
 }
 ```
-It has been also implement in the UserDefaultsPersistance, the other app layers depends only from this protocol.
+It has been also implemented in the UserDefaultsPersistance, the other app layers depends only from this protocol.
 
 ## Testing strategy
 ### Unit tests:

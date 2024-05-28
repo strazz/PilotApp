@@ -14,5 +14,6 @@ extension View {
             .foregroundStyle(.red)
             .fontWeight(.light)
             .font(.caption)
+            .fixedSize(horizontal: false, vertical: true)
     }
 }
