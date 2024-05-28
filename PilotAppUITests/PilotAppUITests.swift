@@ -45,6 +45,12 @@ final class PilotAppUITests: XCTestCase {
         XCTAssert(registerButton.isEnabled)
         registerButton.tap()
         XCTAssert(app.staticTexts["Confirmation"].exists)
+        XCTAssert(app.staticTexts["Welcome TestUser!"].exists)
+        XCTAssert(app.staticTexts["Your license is PPL"].exists)
+        XCTAssert(app.staticTexts["C152"].exists)
+        XCTAssert(app.staticTexts["C172"].exists)
+        XCTAssert(app.staticTexts["D40A"].exists)
+        
         let logoutButton = app.buttons["Logout"]
         XCTAssert(logoutButton.exists)
         XCTAssert(logoutButton.isEnabled)
